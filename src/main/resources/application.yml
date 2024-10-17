@@ -1,24 +1,31 @@
-#
-#spring:
-#  application:
-#    name: hms-api-gateway
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-#          lower-case-service-id: true
-#      mvc:
+spring:
+  application:
+    name: hms-api-gateway
+
+
+  #  spring.cloud.gateway.routes[0].id=room-service
+  #  spring.cloud.gateway.routes[0].uri=lb://ROOM-SERVICE
+  #  spring.cloud.gateway.routes[0].predicates[0]=Path=/ROOM-SERVICE/**
+  cloud:
+    discovery:
+      enabled: true
+
+
 #        routes:
-#         predicates:
-#           - Path=/api/v1/room/**  # Ensure the path matches what you're trying to hit
-#         filters:
-#           - StripPrefix=2  # Adjusts the URL path as needed by your service
-#server:
-#  port: 8080
-#eureka:
-#  client:
-#    register-with-eureka: true
-#    fetch-registry: true
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
+#         - id: room-service
+#           uri:
+#             lb://ROOM-SERVICE
+#           predicates:
+#            - Path=/ROOM-SERVICE/**  # Ensure the path matches what you're trying to hit
+#    discovery:
+#      enabled: true
+
+server:
+  port: 8080
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
